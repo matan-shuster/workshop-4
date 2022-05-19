@@ -43,7 +43,7 @@ It's all asynchronous!
 - You get +1 points for every question you've answered correctly, and -1 for every question you've answered incorrectly
 
 ## Wait how do I make requests to the server?!
-You'll use the built-in `fetch` API - google it! Here's an example to help you out, but it will look slightly different for `POST` requests (this is a simple `GET`):
+You'll use the built-in `fetch` API (no need to install it) - google it! Here's an example to help you out, but it will look slightly different for `POST` requests (this is a simple `GET`):
 ```
     fetch(theEndpoint).then(response => {
         response.json().then(result => {
