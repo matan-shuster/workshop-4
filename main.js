@@ -18,10 +18,14 @@ class AsyncGame {
 
     async getAllQuestions() {
         // GET request to /all_questions
+        // Note! More questions will be added as other students progress in this workshop.
+        // Ask around to see who's added new questions!
     }
 
     async answerQuestion() {
         // POST request to /answer_question
+        // Note! In the response of this request you'll see whether your answer was correct or not.
+        // If you answered incorrectly, try again or bring it up with the user who posted the question!
     }
 
     async getAnswerSubmissions() {
