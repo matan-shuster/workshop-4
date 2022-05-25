@@ -8,18 +8,39 @@ class AsyncGame {
         It's ok if you don't fully understand it yet! You can think of it as a 'blackbox' for now
     */
 
-    async createUser() {
+    async createUser(name) {
         // POST request to the /new_user endpoint
+        const response = await fetch(`${this.API_BASE}/new_user`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({name})})
+        console.log(response);
     }
 
-    async addToQABank() {
+    async addToQABank(question, userID) {
         // POST request to /new_qa
+        const addQA= await fetch(`${this.API_BASE}/new_qa`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                ownerId: userID,
+                question: question.text,
+                answer: question.answer,
+            })
+        })
     }
 
     async getAllQuestions() {
         // GET request to /all_questions
         // Note! More questions will be added as other students progress in this workshop.
         // Ask around to see who's added new questions!
+        const response= await fetch(`${this.API_BASE}/all_questions`)
+        const questions = await response.json()
+        return questions;
     }
 
     async answerQuestion() {
@@ -30,10 +51,18 @@ class AsyncGame {
 
     async getAnswerSubmissions() {
         // GET request to /answer_submissions
+        const response= await fetch(`${this.API_BASE}/answer_submission`)
+        const submissions = await response.json()
+        return submissions;
+
+
     }
 
     async getUsers(){
         // GET request to /the_users
+        const users= await fetch(`${this.API_BASE}/the_users`)
+        const js = await users.json();
+        return js;
     }
 
     async calculateUserScores() {
@@ -64,6 +93,34 @@ class AsyncGame {
 
 const game = new AsyncGame()
 // Remember the server is unexpected, it might return an error!
+
+
+async function gameStart(){
+    // await game.createUser('Kayla');
+    const users = await game.getUsers();
+    console.log(users);
+    const usersArr= Object.entries(users);
+    console.log(usersArr);
+    let userID;
+    for(let i=0; i<usersArr.length; i++){
+        if(usersArr[i][1].name==='Kayla'){
+            userID=i;
+        }
+    }
+    let question = {
+        text: 'What is the capital of the monday? ',
+        answer: 'test'
+    }
+    const addQA = await game.addToQABank(question, userID);
+    const questions = await game.getAllQuestions();
+    console.log(questions);
+    const submissions = await game.getAnswerSubmissions();
+    console.log(submissions);
+
+}
+document.getElementById('start').addEventListener('click', function() {
+    gameStart();
+});
 
 // Example of running the game:
 // game.createUser("Frank")
